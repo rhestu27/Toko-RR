@@ -1,38 +1,36 @@
-# Toko-RR
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Web Template with Database</title>
+    <title>GitHub API Example</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // GitHub API endpoint
+            var apiUrl = 'https://api.github.com/users/{username}';
+
+            // Replace {username} with your GitHub username
+            var username = 'your_username';
+
+            // Make a GET request to the GitHub API
+            $.get(apiUrl.replace('{username}', username), function(data) {
+                // Display user data
+                $('#username').text(data.login);
+                $('#name').text(data.name);
+                $('#bio').text(data.bio);
+                $('#followers').text(data.followers);
+                $('#repos').text(data.public_repos);
+            });
+        });
+    </script>
 </head>
 <body>
-    <?php
-    // Connect to the database
-    $host = 'localhost';
-    $username = 'your_username';
-    $password = 'your_password';
-    $database = 'your_database';
-    $conn = mysqli_connect($host, $username, $password, $database);
-    if (!$conn) {
-        die("Connection failed: " . mysqli_connect_error());
-    }
-
-    // Retrieve data from the database
-    $sql = "SELECT * FROM users";
-    $result = mysqli_query($conn, $sql);
-
-    if (mysqli_num_rows($result) > 0) {
-        echo "<table>";
-        echo "<tr><th>ID</th><th>Name</th><th>Email</th></tr>";
-        while ($row = mysqli_fetch_assoc($result)) {
-            echo "<tr><td>".$row['id']."</td><td>".$row['name']."</td><td>".$row['email']."</td></tr>";
-        }
-        echo "</table>";
-    } else {
-        echo "No data found.";
-    }
-
-    // Close the database connection
-    mysqli_close($conn);
-    ?>
+    <h1>GitHub Profile</h1>
+    <div>
+        <strong>Username:</strong> <span id="username"></span><br>
+        <strong>Name:</strong> <span id="name"></span><br>
+        <strong>Bio:</strong> <span id="bio"></span><br>
+        <strong>Followers:</strong> <span id="followers"></span><br>
+        <strong>Repositories:</strong> <span id="repos"></span><br>
+    </div>
 </body>
 </html>
